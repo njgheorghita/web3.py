@@ -4,6 +4,7 @@ from web3.pm import (
     PM,
 )
 
+
 VALID_MANIFEST = {
     'package_name': 'foo',
     'manifest_version': '2',
@@ -18,6 +19,11 @@ def web3():
     return web3
 
 
-def test_pm_init_with_minimal_manifest(web3):
-    pm = web3.pm.get_package_from_manifest(VALID_MANIFEST)
-    assert pm.name == 'foo'
+def test_pm_get_package_from_manifest(web3):
+    pkg = web3.pm.get_package_from_manifest(VALID_MANIFEST)
+    assert pkg.name == 'foo'
+
+
+def test_pm_get_package_from_registry_uri(web3):
+    pkg = web3.pm.get_package_from_registry_uri('ercxxx://packages.eth/owned?version=1.0.0', web3)
+    assert pkg.name == 'owned'

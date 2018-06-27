@@ -15,3 +15,8 @@ class PM(Module):
     def get_package_from_manifest(self, manifest):
         pkg = Package(manifest)
         return pkg
+
+    def get_package_from_registry_uri(self, registry_uri, w3):
+        pkg = Package.from_registry(registry_uri, w3)
+        return pkg
+
