@@ -372,7 +372,7 @@ class Package(object):
                 for linked_ref in resolved_linked_refs:
                     validate_linked_references(linked_ref, on_chain_bytecode)
 
-        return Deployments(deployments, all_contract_instances, self.w3)
+        return Deployments(deployments, all_contract_instances)
 
     @to_dict
     def _get_all_contract_instances(

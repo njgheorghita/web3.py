@@ -393,8 +393,29 @@ class Contract:
 
         return encode_abi(cls.web3, fn_abi, fn_arguments, data)
 
+
     @combomethod
-    def all_functions(self) -> List['ContractFunction']:
+    @to_tuple
+    def describe(self, dev=False) -> str:
+        details = self.user_doc if not dev else self.dev_doc
+
+        if not details:
+            detail_type = "user_doc" if not dev else "dev_doc"
+            return f"no {detail_type} found. unable to describe this contract."
+
+        if "title" in details:
+            yield f"Title: {details['title']}"
+        if "notice" in details:
+            yield f"Details: {details['notice']}"
+
+        if "methods" in details:
+            fn_data = ((fn_sig, data['notice']) for fn_sig, data in details['methods'].items())
+            for fn_sig, notice in fn_data:
+                yield f"{fn_sig}: {notice}"
+
+
+    @combomethod
+    def all_functions(self) -> List[str]:
         return find_functions_by_identifier(
             self.abi, self.web3, self.address, lambda _: True
         )
